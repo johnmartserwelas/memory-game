@@ -1,0 +1,286 @@
+/**
+ * GameBoard component styles with responsive grid layout
+ * Supports 2x2, 4x4, and 6x6 grids with mobile-first design
+ */
+
+// SCSS Variables
+$grid-gap: 8px;
+$grid-gap-mobile: 6px;
+$grid-gap-tablet: 10px;
+$grid-gap-desktop: 12px;
+$grid-gap-hard-mobile: 6px;
+$grid-gap-hard-tablet: 8px;
+$grid-gap-hard-desktop: 10px;
+
+$board-padding: 16px;
+$board-border-radius: 12px;
+$board-background: white;
+$board-border: 1px solid #e2e8f0;
+$board-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+// Breakpoints
+$mobile-small: 320px;
+$mobile-max: 480px;
+$tablet-max: 768px;
+$desktop-min: 1024px;
+$desktop-large: 1440px;
+
+// Main board container
+.gameBoard {
+  background: $board-background;
+  border: $board-border;
+  border-radius: $board-border-radius;
+  box-shadow: $board-shadow;
+  padding: $board-padding;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  
+  // Responsive max-widths to maintain card proportions
+  @media (max-width: $mobile-max) {
+    padding: 12px;
+  }
+  
+  @media (min-width: $mobile-max) and (max-width: $tablet-max) {
+    max-width: 450px;
+    padding: 14px;
+  }
+  
+  @media (min-width: $tablet-max) and (max-width: $desktop-min) {
+    max-width: 550px;
+    padding: 16px;
+  }
+  
+  @media (min-width: $desktop-min) {
+    max-width: 650px;
+    padding: 20px;
+  }
+  
+  // Special constraints for hard difficulty to prevent overflow
+  &:has(.grid.hard) {
+    @media (max-width: $mobile-small) {
+      max-width: 350px;
+      padding: 12px;
+    }
+    
+    @media (min-width: $mobile-small) and (max-width: $mobile-max) {
+      max-width: 450px;
+      padding: 16px;
+    }
+    
+    @media (min-width: $mobile-max) and (max-width: $tablet-max) {
+      max-width: 580px;
+      padding: 18px;
+    }
+    
+    @media (min-width: $tablet-max) and (max-width: $desktop-min) {
+      max-width: 700px;
+      padding: 20px;
+    }
+    
+    @media (min-width: $desktop-min) {
+      max-width: 800px;
+      padding: 24px;
+    }
+  }
+}
+
+// Grid container
+.grid {
+  display: grid;
+  gap: $grid-gap-mobile;
+  width: 100%;
+  justify-content: center;
+  
+  @media (min-width: $mobile-max) {
+    gap: $grid-gap;
+  }
+  
+  @media (min-width: $tablet-max) {
+    gap: $grid-gap-tablet;
+  }
+  
+  @media (min-width: $desktop-min) {
+    gap: $grid-gap-desktop;
+  }
+  
+  // Easy difficulty (2x2)
+  &.easy {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    
+    // Larger cards for 2x2 grid
+    .cardWrapper {
+      aspect-ratio: 1/1;
+      min-height: 80px;
+      
+      @media (max-width: $mobile-small) {
+        min-height: 70px;
+      }
+      
+      @media (min-width: $mobile-max) {
+        min-height: 120px;
+      }
+      
+      @media (min-width: $tablet-max) {
+        min-height: 150px;
+      }
+      
+      @media (min-width: $desktop-min) {
+        min-height: 180px;
+      }
+    }
+  }
+  
+  // Medium difficulty (4x4)
+  &.medium {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    
+    .cardWrapper {
+      aspect-ratio: 1/1;
+      min-height: 60px;
+      
+      @media (max-width: $mobile-small) {
+        min-height: 50px;
+      }
+      
+      @media (min-width: $mobile-max) {
+        min-height: 80px;
+      }
+      
+      @media (min-width: $tablet-max) {
+        min-height: 100px;
+      }
+      
+      @media (min-width: $desktop-min) {
+        min-height: 120px;
+      }
+    }
+  }
+  
+  // Hard difficulty (6x6) - Special handling for spacing and sizing
+  &.hard {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: $grid-gap-hard-mobile;
+    max-width: 100%;
+    
+    @media (min-width: $mobile-max) {
+      gap: $grid-gap-hard-mobile;
+    }
+    
+    @media (min-width: $tablet-max) {
+      gap: $grid-gap-hard-tablet;
+    }
+    
+    @media (min-width: $desktop-min) {
+      gap: $grid-gap-hard-desktop;
+    }
+    
+    .cardWrapper {
+      aspect-ratio: 1/1;
+      width: 100%;
+      
+      // Extra small screens (320px)
+      @media (max-width: $mobile-small) {
+        min-height: 45px;
+        max-height: 55px;
+      }
+      
+      // Small mobile (320px - 480px)
+      @media (min-width: $mobile-small) and (max-width: $mobile-max) {
+        min-height: 55px;
+        max-height: 65px;
+      }
+      
+      // Large mobile/small tablet (480px - 768px)
+      @media (min-width: $mobile-max) and (max-width: $tablet-max) {
+        min-height: 70px;
+        max-height: 85px;
+      }
+      
+      // Tablet (768px - 1024px)
+      @media (min-width: $tablet-max) and (max-width: $desktop-min) {
+        min-height: 85px;
+        max-height: 100px;
+      }
+      
+      // Desktop (1024px+)
+      @media (min-width: $desktop-min) {
+        min-height: 100px;
+        max-height: 120px;
+      }
+    }
+  }
+}
+
+// Individual card wrapper
+.cardWrapper {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Loading state
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: #64748b;
+  font-size: 1.1rem;
+}
+
+// Game complete overlay
+.gameComplete {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(16, 185, 129, 0.1);
+    border-radius: $board-border-radius;
+    pointer-events: none;
+    animation: completePulse 2s ease-in-out;
+  }
+}
+
+@keyframes completePulse {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+// Accessibility improvements
+@media (prefers-reduced-motion: reduce) {
+  .gameComplete::after {
+    animation: none;
+    opacity: 0.1;
+  }
+}
+
+// High contrast mode
+@media (prefers-contrast: high) {
+  .gameBoard {
+    background: #ffffff;
+    border: 2px solid #000000;
+  }
+}
+
+// Focus management for keyboard navigation
+.grid:focus-within {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: $board-border-radius;
+}

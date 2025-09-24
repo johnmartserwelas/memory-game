@@ -1,0 +1,380 @@
+/**
+ * GameControls component styles
+ * Timer, moves counter, restart button, and difficulty selector
+ */
+
+// SCSS Variables
+$controls-padding: 16px;
+$controls-gap: 12px;
+$controls-border-radius: 8px;
+$controls-background: #ffffff;
+$controls-border: 1px solid #e2e8f0;
+$controls-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+$button-padding: 8px 16px;
+$button-border-radius: 6px;
+$button-transition: all 0.2s ease;
+
+// Colors
+$primary-color: #6366f1;
+$primary-hover: #4f46e5;
+$secondary-accent: #8b5cf6;
+$success-color: #10b981;
+$success-gradient: linear-gradient(135deg, #10b981, #059669);
+$text-color: #1f2937;
+$text-muted: #6b7280;
+$border-color: rgba(99, 102, 241, 0.15);
+
+// Breakpoints
+$mobile-small: 320px;
+$mobile-max: 480px;
+$tablet-max: 768px;
+$desktop-min: 1024px;
+$desktop-large: 1440px;
+
+// Main controls container
+.gameControls {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  box-shadow: 
+    0 8px 32px rgba(99, 102, 241, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 200%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.3), transparent);
+    animation: shimmerLine 3s infinite linear;
+  }
+
+  @media (max-width: $mobile-small) {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  @media (min-width: $mobile-max) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 18px;
+  }
+
+  @media (min-width: $desktop-min) {
+    max-width: 700px;
+    padding: 20px;
+    gap: 16px;
+  }
+}
+
+// Stats section (timer and moves)
+.stats {
+  display: flex;
+  gap: $controls-gap * 1.5;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  
+  @media (max-width: $mobile-small) {
+    gap: $controls-gap;
+  }
+  
+  @media (min-width: $desktop-min) {
+    gap: $controls-gap * 2;
+  }
+
+  @media (min-width: $mobile-max) {
+    justify-content: flex-start;
+  }
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.6);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.1);
+  }
+
+  @media (min-width: $mobile-max) {
+    align-items: flex-start;
+  }
+}
+
+.statLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  
+  &::before {
+    font-size: 0.9rem;
+  }
+}
+
+.statValue {
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, $primary-color, $secondary-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-variant-numeric: tabular-nums;
+  position: relative;
+
+  &.complete {
+    background: $success-gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: pulseComplete 2s ease infinite;
+  }
+}
+
+// Controls section (difficulty and restart)
+.controls {
+  display: flex;
+  gap: $controls-gap;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  @media (min-width: $mobile-max) {
+    justify-content: flex-end;
+  }
+}
+
+// Difficulty selector
+.difficultySelector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.difficultyLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: $text-color;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.difficultySelect {
+  padding: 12px 16px;
+  border: 2px solid $border-color;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  color: $text-color;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.08);
+
+  &:hover {
+    border-color: $primary-color;
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.15);
+  }
+
+  &:focus {
+    outline: 3px solid rgba(99, 102, 241, 0.2);
+    outline-offset: 2px;
+    border-color: $primary-color;
+  }
+}
+
+// Restart button
+.restartButton {
+  padding: 12px 20px;
+  background: linear-gradient(135deg, $primary-color, $secondary-accent);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  box-shadow: 
+    0 4px 16px rgba(99, 102, 241, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+  }
+
+  &:hover {
+    background: linear-gradient(135deg, $primary-hover, #7c3aed);
+    transform: translateY(-2px);
+    box-shadow: 
+      0 6px 24px rgba(99, 102, 241, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+
+  &:focus {
+    outline: 3px solid rgba(99, 102, 241, 0.4);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+
+    &:hover {
+      background: linear-gradient(135deg, $primary-color, $secondary-accent);
+      transform: none;
+      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+    }
+  }
+}
+
+// Game complete state
+.gameComplete {
+  .stats {
+    animation: celebrateStats 0.6s ease;
+  }
+
+  .statValue {
+    color: $success-color;
+  }
+}
+
+@keyframes celebrateStats {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shimmerLine {
+  0% {
+    left: -50%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+@keyframes pulseComplete {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+
+// Responsive adjustments
+@media (max-width: $mobile-max) {
+  .gameControls {
+    text-align: center;
+  }
+
+  .stats {
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  .controls {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .difficultySelector {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+// High contrast mode
+@media (prefers-contrast: high) {
+  .gameControls {
+    border: 2px solid #000000;
+  }
+
+  .restartButton {
+    background: #000000;
+    border: 2px solid #000000;
+
+    &:hover {
+      background: #333333;
+    }
+  }
+
+  .difficultySelect {
+    border: 2px solid #000000;
+  }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .restartButton:hover {
+    transform: none;
+  }
+
+  .gameComplete .stats {
+    animation: none;
+  }
+}
