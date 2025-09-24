@@ -76,7 +76,7 @@ export const Game: React.FC = () => {
         {/* Game Complete Message */}
         {gameState.isGameComplete && (
           <div className={styles.gameCompleteMessage} role="alert">
-            🎉 Congratulations! You completed the game in {gameState.moves} moves and {Math.floor(timerState.seconds / 60)}:{(timerState.seconds % 60).toString().padStart(2, '0')}!
+            🎉 Congratulations! You completed the game in {gameState.moves} moves and {formatTime(timerState.seconds)}!
           </div>
         )}
 

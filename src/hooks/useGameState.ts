@@ -53,7 +53,7 @@ export function useGameState(initialDifficulty: DifficultyLevel = 'medium') {
     if (isProcessing) return 'invalid';
     
     setGameState(prevState => {
-      const { cards, flippedCards, moves, isGameStarted } = prevState;
+      const { cards, flippedCards, moves } = prevState;
       
       // Validate if card can be flipped
       if (!canFlipCard(cardToFlip, flippedCards)) {
@@ -141,7 +141,7 @@ export function useGameState(initialDifficulty: DifficultyLevel = 'medium') {
         }, ANIMATION_TIMINGS.MISMATCH_DELAY);
       }
     }
-  }, [gameState.flippedCards.length, isProcessing]);
+  }, [gameState.flippedCards, isProcessing]);
 
   // Restart game with current difficulty
   const restartGame = useCallback(() => {

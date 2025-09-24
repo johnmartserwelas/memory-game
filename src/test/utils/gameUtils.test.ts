@@ -8,9 +8,7 @@ import {
   shuffleArray,
   generateCardDeck,
   isMatchingPair,
-  calculateScore,
   formatTime,
-  isGameComplete,
   canFlipCard,
 } from '../../utils/gameUtils';
 import type { Card } from '../../types/game';
